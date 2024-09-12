@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Perguntas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quiz de Perguntas</h1>
+  
+  <div id="quiz-container"></div>
+  
+  <button onclick="mostrarResultado()">Mostrar Resultado</button>
+  
+  <p id="resultado"></p>
+
+  <script>
+    // Perguntas e respostas corretas
+    const perguntas = [
+      {
+        pergunta: "A cor dos meus olhos são azuis?",
+        respostaCorreta: "não"
+      },
+      {
+        pergunta: "O sol é um planeta?",
+        respostaCorreta: "não"
+      },
+      {
+        pergunta: "A água ferve a 100 graus Celsius?",
+        respostaCorreta: "sim"
+      },
+      {
+        pergunta: "Meu nome é Jemima Vitória?",
+        respostaCorreta: "sim"
+      },
+      {
+        pergunta: "Eu sou uma IA?",
+        respostaCorreta: "não"
+      },
+      {
+        pergunta: "Meu IG é JuJuBaSurf desde 2008?",
+        respostaCorreta: "sim"
+      }
+    ];
+
+    let pontuacao = 0;
+
+    // Função para criar o quiz
+    function criarQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = ''; // Limpa o container
+      pontuacao = 0; // Reseta a pontuação
+
+      perguntas.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'question';
+        div.innerHTML = `
+          <p>${index + 1}. ${item.pergunta}</p>
+          <button onclick="responder(${index}, 'sim')">Sim</button>
+          <button onclick="responder(${index}, 'não')">Não</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Função para processar a resposta
+    function responder(indice, resposta) {
+      const pergunta = perguntas[indice];
+      if (resposta === pergunta.respostaCorreta) {
+        pontuacao++;
+      }
+    }
+
+    // Função para mostrar o resultado
+    function mostrarResultado() {
+      const resultado = document.getElementById("resultado");
+      // Calcula a pontuação em uma escala de 0 a 10
+      const maxPontuacao = perguntas.length;
+      let resultadoFinal = (pontuacao / maxPontuacao) * 10;
+      resultadoFinal = Math.round(resultadoFinal); // Arredonda para o inteiro mais próximo
+      resultado.innerText = `Sua pontuação é: ${resultadoFinal} de 10`;
+    }
+
+    // Inicializa o quiz
+    criarQuiz();
+  </script>
